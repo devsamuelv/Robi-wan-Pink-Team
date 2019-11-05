@@ -16,7 +16,7 @@ public class Teleop extends OpMode {
             telemetry.addData("Robot Info", "Robot Initialized");
             telemetry.update();
         } catch (Exception e) {
-            telemetry.addData("Error", "System Error " + e.getMessage() + " Robot Not Initialized");
+            telemetry.addData("Error", "System Error " + e.getMessage() + " Robot is Not Initialized");
             telemetry.update();
         }
     }
