@@ -9,21 +9,19 @@ import static org.firstinspires.ftc.teamcode.PinkCode.Hardware.Hardware.*;
 @TeleOp(group = "Teleop", name = "Teleop")
 public class Teleop extends OpMode {
 
+    private double MotorPower = 2000;
+
     @Override
     public void init() {
-        try {
-            StartHardware();
-            telemetry.addData("Robot Info", "Robot Initialized");
-            telemetry.update();
-        } catch (Exception e) {
-            telemetry.addData("Error", "System Error " + e.getMessage() + " Robot is Not Initialized");
-            telemetry.update();
-        }
+        StartHardware(hardwareMap);
     }
 
     @Override
     public void loop() {
-        MotorDrive(gamepad1.right_stick_y, gamepad1.left_stick_y);
-        ButtonControls(30, gamepad1.x, gamepad1.y, gamepad1.a, gamepad1.b);
+        LeftBack.setPower(gamepad1.left_stick_y);
+        LeftFront.setPower(gamepad1.left_stick_y);
+
+        RightFront.setPower(gamepad1.right_stick_y);
+        RightBack.setPower(gamepad1.right_stick_y);
     }
 }

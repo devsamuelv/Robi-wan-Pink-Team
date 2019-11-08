@@ -19,21 +19,39 @@ public class Hardware {
     private static Servo servo3; // placeHolder
 
     public static Telemetry telemetry;
-    private static HardwareMap hardwareMap;
+    private static HardwareMap hwmap = null;
 
-    public static void StartHardware() throws NullPointerException{
+    public static void StartHardware(HardwareMap hardwareMap){
+        hwmap = hardwareMap;
 
-        RightBack = hardwareMap.dcMotor.get("MotorRightBack");
-        RightFront = hardwareMap.dcMotor.get("MotorRightFront");
-        LeftBack = hardwareMap.dcMotor.get("MotorLeftBack");
-        LeftFront = hardwareMap.dcMotor.get("MotorLeftFront");
-
-        RightBack.setDirection(DcMotorSimple.Direction.REVERSE);
-        LeftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        RightFront = hwmap.dcMotor.get("rf");
+        RightBack = hwmap.dcMotor.get("rb");
+        LeftFront = hwmap.get(DcMotor.class, "lf");
+        LeftBack = hwmap.get(DcMotor.class, "lb");
 
         RightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LeftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         RightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LeftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        RightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        LeftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        RightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        LeftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        RightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        LeftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        RightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        LeftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        RightBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        RightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        LeftBack.setDirection(DcMotorSimple.Direction.FORWARD);
+        LeftFront.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        RightBack.setPower(0);
+        LeftBack.setPower(0);
+        RightFront.setPower(0);
+        LeftFront.setPower(0);
     }
 }

@@ -9,29 +9,13 @@ public class Driving {
         // no code here for now.
     }
 
-    public static void MotorDrive(double RightPower, double LeftPower) {
-        LeftBack.setPower(LeftPower);
-        RightBack.setPower(RightPower);
-        RightFront.setPower(RightPower);
-        LeftFront.setPower(LeftPower);
+    public static void MotorDrive(double gamepad_Y_Right, double gamepad_Y_Left) {
+    }
+
+    public static void RotateDrive(boolean LeftRotate, boolean RightRotate, double Power) {
     }
 
     public static void ButtonControls(double Power ,boolean is_x_pressed, boolean is_y_pressed, boolean is_a_pressed, boolean is_b_pressed){
-        if (is_x_pressed) {
-            LeftBack.setPower(Power);
-            LeftFront.setPower(Power);
-        } else if (is_y_pressed) {
-            RightFront.setPower(Power);
-            RightBack.setPower(Power);
-        } else if (is_b_pressed) {
-            RightFront.setPower(Power);
-            LeftBack.setPower(Power);
-        } else if (is_a_pressed) {
-            LeftFront.setPower(Power);
-            RightBack.setPower(Power);
-        } else {
-            telemetry.addData("Message", "Button's Are Not Working?");
-            telemetry.update();
-        }
+
     }
 }
