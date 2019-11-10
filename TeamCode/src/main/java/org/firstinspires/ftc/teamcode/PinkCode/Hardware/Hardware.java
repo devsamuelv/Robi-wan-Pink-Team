@@ -24,8 +24,8 @@ public class Hardware {
     public static void StartHardware(HardwareMap hardwareMap){
         hwmap = hardwareMap;
 
-        RightFront = hwmap.dcMotor.get("rf");
-        RightBack = hwmap.dcMotor.get("rb");
+        RightFront = hwmap.get(DcMotor.class, "rf");
+        RightBack = hwmap.get(DcMotor.class, "rb");
         LeftFront = hwmap.get(DcMotor.class, "lf");
         LeftBack = hwmap.get(DcMotor.class, "lb");
 
@@ -46,8 +46,8 @@ public class Hardware {
 
         RightBack.setDirection(DcMotorSimple.Direction.REVERSE);
         RightFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        LeftBack.setDirection(DcMotorSimple.Direction.FORWARD);
-        LeftFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        LeftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        LeftFront.setDirection(DcMotorSimple.Direction.REVERSE);
 
         RightBack.setPower(0);
         LeftBack.setPower(0);
