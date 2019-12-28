@@ -14,9 +14,10 @@ public class Hardware {
     public static DcMotor RightFront;
     public static DcMotor LeftFront;
 
-    private static Servo ServoAngle1; // placeHolder
-    private static Servo servo2; // placeHolder
-    private static Servo servo3; // placeHolder
+    public static Servo ground_servo;
+    public static Servo level_1_servo;
+    public static Servo grabber_left;
+    public static Servo grabber_right;
 
     public static Telemetry telemetry;
     private static HardwareMap hwmap = null;
@@ -53,5 +54,15 @@ public class Hardware {
         LeftBack.setPower(0);
         RightFront.setPower(0);
         LeftFront.setPower(0);
+
+        ground_servo = hwmap.get(Servo.class, "sr1");
+        level_1_servo = hwmap.get(Servo.class, "sr2");
+        grabber_left = hwmap.get(Servo.class, "sr3");
+        grabber_right = hwmap.get(Servo.class, "sr4");
+
+        ground_servo.setPosition(90);
+        level_1_servo.setPosition(0);
+        grabber_right.setPosition(0);
+        grabber_left.setPosition(-0);
     }
 }
