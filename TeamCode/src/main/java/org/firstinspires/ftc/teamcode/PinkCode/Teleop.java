@@ -8,9 +8,6 @@ import static org.firstinspires.ftc.teamcode.PinkCode.Hardware.Hardware.*;
 @TeleOp(group = "Teleop", name = "Teleop")
 public class Teleop extends OpMode {
 
-    private double MotorPower = 100;
-    private int PowerLevel = 5;
-
     @Override
     public void init() {
         StartHardware(hardwareMap);
@@ -42,10 +39,6 @@ public class Teleop extends OpMode {
             grabber_left.setPosition(getGrabberLeft() - 5);
             grabber_right.setPosition(getGrabberRight() - 5);
         }
-
-        // code for servo arm
-        // put it here
-
     }
 
     private double getServoGround() {
