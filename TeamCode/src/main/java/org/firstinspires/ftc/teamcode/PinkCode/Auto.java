@@ -9,9 +9,6 @@ import static org.firstinspires.ftc.teamcode.PinkCode.Hardware.Hardware.*;
 
 @Autonomous(name = "Show Off", group = "Auto")
 public class Auto extends OpMode {
-    private double Motor_Power;
-    private long sleep_time = 5000;
-    private boolean STOP = false;
 
     @Override
     public void init() {
