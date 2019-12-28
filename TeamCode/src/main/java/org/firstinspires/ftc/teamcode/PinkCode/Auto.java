@@ -20,11 +20,6 @@ public class Auto extends OpMode {
 
     @Override
     public void loop() {
-        for (int i = 0; i < 10; i++) {
-            LeftFront.setPower(80);
-            LeftBack.setPower(80);
-            RightFront.setPower(80);
-            RightBack.setPower(80);
-        }
+
     }
 }
