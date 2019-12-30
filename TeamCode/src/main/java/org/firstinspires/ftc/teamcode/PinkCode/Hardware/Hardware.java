@@ -60,9 +60,12 @@ public class Hardware {
         grabber_left = hwmap.get(Servo.class, "sr3");
         grabber_right = hwmap.get(Servo.class, "sr4");
 
-        ground_servo.setPosition(90);
-        level_1_servo.setPosition(0);
-        grabber_right.setPosition(0);
-        grabber_left.setPosition(-0);
+        ground_servo.setPosition(Servo.MAX_POSITION);
+        level_1_servo.setPosition(Servo.MIN_POSITION);
+        grabber_right.setPosition(30);
+        grabber_left.setPosition(Servo.MAX_POSITION);
+
+        grabber_left.setDirection(Servo.Direction.REVERSE);
+        grabber_right.setDirection(Servo.Direction.FORWARD);
     }
 }

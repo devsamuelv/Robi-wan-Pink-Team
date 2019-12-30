@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.PinkCode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import static org.firstinspires.ftc.teamcode.PinkCode.Hardware.Hardware.*;
 
@@ -21,23 +22,25 @@ public class Teleop extends OpMode {
         LeftBack.setPower(gamepad1.left_stick_y);
 
         while (gamepad1.dpad_up) {
-            ground_servo.setPosition(getServoGround() + 20);
-            level_1_servo.setPosition(getLevel_1_servo() + 30);
+            ground_servo.setPosition(getServoGround() - 0.1);
+            for (double i = Servo.MIN_POSITION; i < Servo.MAX_POSITION; i++) {
+                level_1_servo.setPosition(i);
+            }
         }
 
         while (gamepad1.dpad_down) {
-            ground_servo.setPosition(getServoGround() - 20);
-            level_1_servo.setPosition(getLevel_1_servo() - 30);
+            ground_servo.setPosition(getServoGround() + 0.1);
+            level_1_servo.setPosition(getLevel_1_servo() + 0.1);
         }
 
         while (gamepad1.a) {
-            grabber_left.setPosition(getGrabberLeft() + 5);
-            grabber_right.setPosition(getGrabberRight() + 5);
+            grabber_left.setPosition(getGrabberLeft() + 0.1);
+            grabber_right.setPosition(getGrabberRight() + 0.1);
         }
 
         while (gamepad1.b) {
-            grabber_left.setPosition(getGrabberLeft() - 5);
-            grabber_right.setPosition(getGrabberRight() - 5);
+            grabber_left.setPosition(getGrabberLeft() - 0.1);
+            grabber_right.setPosition(getGrabberRight() - 0.1);
         }
     }
 
