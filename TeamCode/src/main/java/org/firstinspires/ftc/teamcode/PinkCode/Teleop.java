@@ -34,16 +34,16 @@ public class Teleop extends OpMode {
         while (gamepad1.y) {
             level_1_servo.setPosition(0.5);
             ground_servo.setPosition(0.8);
+            telemetry.addData("Servo Ground", getServoGround());
+            telemetry.addData("Servo Level 1", getLevel_1_servo());
+            telemetry.update();
         }
 
         while (gamepad1.x) {
-            for (long i = 0; i < 176; i++) {
-                level_1_servo.setPosition(getLevel_1_servo() - 0.1);
-                telemetry.addData("Level 1", level_1_servo.getPosition());
-                telemetry.addData("Grabber Left", grabber_left.getPosition());
-                telemetry.addData("Grabber Right", grabber_right.getPosition());
-                telemetry.update();
-            }
+            level_1_servo.setPosition(0);
+            ground_servo.setPosition(0);
+            telemetry.addData("Servo Level 1", getLevel_1_servo());
+            telemetry.addData("Servo Ground", getServoGround());
         }
 
         while (gamepad1.a) {
