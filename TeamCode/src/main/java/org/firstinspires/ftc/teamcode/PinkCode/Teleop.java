@@ -38,8 +38,8 @@ public class Teleop extends OpMode {
                 press ++;
             } else if (press == 1) {
                 // todo finish this preset
-                level_1_servo.setPosition(0.5);
-                ground_servo.setPosition(0.5)
+                level_1_servo.setPosition(0.);
+                ground_servo.setPosition(0.5);
                 telemetry.addData("Servo Ground", getServoGround());
                 telemetry.addData("Servo Level 1", getLevel_1_servo());
                 telemetry.update();
