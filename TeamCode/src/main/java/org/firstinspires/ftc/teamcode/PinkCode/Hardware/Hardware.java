@@ -62,7 +62,7 @@ public class Hardware {
 
         ground_servo.setPosition(Servo.MAX_POSITION);
         level_1_servo.setPosition(Servo.MIN_POSITION);
-        grabber_right.setPosition(Servo.MAX_POSITION);
+        grabber_right.setPosition(1);
         grabber_left.setPosition(Servo.MAX_POSITION);
 
         grabber_left.setDirection(Servo.Direction.REVERSE);

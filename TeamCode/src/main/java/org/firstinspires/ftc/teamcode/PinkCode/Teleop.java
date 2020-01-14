@@ -1,17 +1,14 @@
 package org.firstinspires.ftc.teamcode.PinkCode;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Servo.*;
-import com.qualcomm.robotcore.hardware.Servo;
-
-import java.util.concurrent.TimeUnit;
 
 import static org.firstinspires.ftc.teamcode.PinkCode.Hardware.Hardware.*;
 
 @TeleOp(group = "Teleop", name = "Teleop")
 public class Teleop extends OpMode {
+
+    public int press = 0;
 
     @Override
     public void init() {
@@ -32,11 +29,41 @@ public class Teleop extends OpMode {
         LeftBack.setPower(gamepad1.left_stick_y);
 
         while (gamepad1.y) {
-            level_1_servo.setPosition(0.5);
-            ground_servo.setPosition(0.8);
-            telemetry.addData("Servo Ground", getServoGround());
-            telemetry.addData("Servo Level 1", getLevel_1_servo());
-            telemetry.update();
+            if (press == 0) {
+                level_1_servo.setPosition(0.5);
+                ground_servo.setPosition(0.8);
+                telemetry.addData("Servo Ground", getServoGround());
+                telemetry.addData("Servo Level 1", getLevel_1_servo());
+                telemetry.update();
+                press ++;
+            } else if (press == 1) {
+                // todo finish this preset
+                level_1_servo.setPosition(0.5);
+                ground_servo.setPosition(0.5)
+                telemetry.addData("Servo Ground", getServoGround());
+                telemetry.addData("Servo Level 1", getLevel_1_servo());
+                telemetry.update();
+                press ++;
+            } else if (press == 2) {
+                // todo finish this preset
+                level_1_servo.setPosition(0.5);
+                ground_servo.setPosition(0.8);
+                telemetry.addData("Servo Ground", getServoGround());
+                telemetry.addData("Servo Level 1", getLevel_1_servo());
+                telemetry.update();
+                press ++;
+            } else if (press == 3) {
+                // todo finish this preset
+                level_1_servo.setPosition(0.5);
+                ground_servo.setPosition(0.8);
+                telemetry.addData("Servo Ground", getServoGround());
+                telemetry.addData("Servo Level 1", getLevel_1_servo());
+                telemetry.update();
+                press ++;
+            } else {
+                telemetry.addData("press value is invalid: ", press);
+                telemetry.update();
+            }
         }
 
         while (gamepad1.x) {
@@ -77,16 +104,5 @@ public class Teleop extends OpMode {
 
     private double getGrabberRight() {
         return grabber_right.getPosition();
-    }
-
-    public void print(String caption, String message) {
-        telemetry.addData(caption, message);
-        telemetry.update();
-    }
-
-    public void timer(long time) {
-        for (long i = 0; i < 176000; i++) {
-
-        }
     }
 }
