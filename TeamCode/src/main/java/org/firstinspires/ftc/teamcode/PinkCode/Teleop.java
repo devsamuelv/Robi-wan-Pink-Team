@@ -2,10 +2,9 @@ package org.firstinspires.ftc.teamcode.PinkCode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
-import java.awt.font.NumericShaper;
+import java.math.BigDecimal;
 
 import static org.firstinspires.ftc.teamcode.PinkCode.Hardware.Hardware.*;
 
@@ -43,106 +42,33 @@ public class Teleop extends OpMode {
 
             LeftFront.setPower(-power);
             LeftBack.setPower(power);
-            telemetry.addData("Motor Drive", "Right" + gamepad1.right_stick_x);
+            telemetry.addData("Motor Drive", "Right" + power);
             telemetry.addData("System info", "Using the Range clip for power.");
             telemetry.update();
         }
 
         // strafe left
         if (gamepad1.right_stick_x == -1) {
-            RightFront.setPower(-1000.00);
-            RightBack.setPower(1000.00);
+            double strafe = gamepad1.right_stick_x;
 
-            LeftFront.setPower(1000.00);
-            LeftBack.setPower(1000.00);
+            double power = Range.clip(strafe, -1.0, 1.0);
+
+            RightFront.setPower(-power);
+            RightBack.setPower(power);
+
+            LeftFront.setPower(power);
+            LeftBack.setPower(-power);
             telemetry.addData("Motor Drive", "Left" + gamepad1.right_stick_x);
             telemetry.update();
         }
 
-        while (gamepad1.y) {
-            if (press == 0) {
-                level_1_servo.setPosition(0.5);
-                ground_servo.setPosition(0.8);
-                telemetry.addData("Servo Ground", getServoGround());
-                telemetry.addData("Servo Level 1", getLevel_1_servo());
-                telemetry.update();
-                press ++;
-                return;
-            } else if (press == 1) {
-                // todo finish this preset
-                level_1_servo.setPosition(1);
-                ground_servo.setPosition(0.5);
-                telemetry.addData("Servo Ground", getServoGround());
-                telemetry.addData("Servo Level 1", getLevel_1_servo());
-                telemetry.update();
-                press ++;
-                return;
-            } else if (press == 2) {
-                // todo finish this preset
-                level_1_servo.setPosition(0.5);
-                ground_servo.setPosition(0.8);
-                telemetry.addData("Servo Ground", getServoGround());
-                telemetry.addData("Servo Level 1", getLevel_1_servo());
-                telemetry.update();
-                press ++;
-                return;
-            } else if (press == 3) {
-                // todo finish this preset
-                level_1_servo.setPosition(0.5);
-                ground_servo.setPosition(0.8);
-                telemetry.addData("Servo Ground", getServoGround());
-                telemetry.addData("Servo Level 1", getLevel_1_servo());
-                telemetry.update();
-                press ++;
-                return;
-            } else {
-                telemetry.addData("press value is invalid: ", press);
-                telemetry.update();
-            }
+        if (gamepad1.x) {
+            ground_servo.setPosition(0.7);
         }
 
-        while (gamepad1.x) {
-            if (press == 0) {
-                level_1_servo.setPosition(0);
-                ground_servo.setPosition(0);
-                telemetry.addData("Servo Ground", getServoGround());
-                telemetry.addData("Servo Level 1", getLevel_1_servo());
-                telemetry.update();
-                press --;
-                return;
-            } else if (press == 1) {
-                // todo finish this preset
-                level_1_servo.setPosition(1);
-                ground_servo.setPosition(0.5);
-                telemetry.addData("Servo Ground", getServoGround());
-                telemetry.addData("Servo Level 1", getLevel_1_servo());
-                telemetry.update();
-                press --;
-                return;
-            } else if (press == 2) {
-                // todo finish this preset
-                level_1_servo.setPosition(0.5);
-                ground_servo.setPosition(0.8);
-                telemetry.addData("Servo Ground", getServoGround());
-                telemetry.addData("Servo Level 1", getLevel_1_servo());
-                telemetry.update();
-                press --;
-                return;
-            } else if (press == 3) {
-                // todo finish this preset
-                level_1_servo.setPosition(0.5);
-                ground_servo.setPosition(0.8);
-                telemetry.addData("Servo Ground", getServoGround());
-                telemetry.addData("Servo Level 1", getLevel_1_servo());
-                telemetry.update();
-                press --;
-                return;
-            } else {
-                telemetry.addData("press value is invalid: ", press);
-                telemetry.update();
-            }
+        if (gamepad1.y) {
+            ground_servo.setPosition(0.5);
         }
-
         while (gamepad1.a) {
             grabber_left.setPosition(getGrabberLeft() + 0.1);
             grabber_right.setPosition(getGrabberRight() + 0.1);
