@@ -1,21 +1,14 @@
 package org.firstinspires.ftc.teamcode.PinkCode.Systems;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DcMotorImpl;
+
 import static org.firstinspires.ftc.teamcode.PinkCode.Hardware.Hardware.*;
 
-public class Driving {
+public class Driving extends DcMotorImpl {
 
-    public static void ServoDrive(float RightServoX, float LeftServoX) {
-        // no code here for now.
-    }
-
-    public static void MotorDrive(double gamepad_Y_Right, double gamepad_Y_Left) {
-    }
-
-    public static void RotateDrive(boolean LeftRotate, boolean RightRotate, double Power) {
-    }
-
-    public static void ButtonControls(double Power ,boolean is_x_pressed, boolean is_y_pressed, boolean is_a_pressed, boolean is_b_pressed){
-
+    public Driving(DcMotorController controller, int portNumber) {
+        super(controller, portNumber);
     }
 }

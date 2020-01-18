@@ -177,7 +177,6 @@ public class FtcRobotControllerActivity extends Activity
   private WifiDirectChannelChanger wifiDirectChannelChanger;
 
   protected class RobotRestarter implements Restarter {
-
     public void requestRestart() {
       requestRobotRestart();
     }

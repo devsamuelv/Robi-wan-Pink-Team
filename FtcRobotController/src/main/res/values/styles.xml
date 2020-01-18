@@ -5,7 +5,7 @@
     <style name="AppThemeRedRC" parent="AppTheme.Blue">
     </style>
 
-    <style name="AppThemeGreenRC" parent="AppTheme.Blue">
+    <style name="AppThemePinkRC" parent="AppTheme">
     </style>
 
     <style name="AppThemeBlueRC" parent="AppTheme.Blue">

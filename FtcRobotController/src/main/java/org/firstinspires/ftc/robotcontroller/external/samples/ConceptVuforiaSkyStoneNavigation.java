@@ -188,6 +188,7 @@ public class ConceptVuforiaSkyStoneNavigation extends LinearOpMode {
 
         // For convenience, gather together all the trackable objects in one easily-iterable collection */
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
+
         allTrackables.addAll(targetsSkyStone);
 
         /**

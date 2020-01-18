@@ -2,6 +2,10 @@ package org.firstinspires.ftc.teamcode.PinkCode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.Range;
+
+import java.awt.font.NumericShaper;
 
 import static org.firstinspires.ftc.teamcode.PinkCode.Hardware.Hardware.*;
 
@@ -27,6 +31,33 @@ public class Teleop extends OpMode {
         RightBack.setPower(gamepad1.right_stick_y);
         LeftFront.setPower(gamepad1.left_stick_y);
         LeftBack.setPower(gamepad1.left_stick_y);
+
+        // go right
+        if (gamepad1.right_stick_x == 1) {
+            double strafe = gamepad1.right_stick_x;
+
+            double power = Range.clip(strafe, -1.0, 1.0);
+
+            RightFront.setPower(power);
+            RightBack.setPower(-power);
+
+            LeftFront.setPower(-power);
+            LeftBack.setPower(power);
+            telemetry.addData("Motor Drive", "Right" + gamepad1.right_stick_x);
+            telemetry.addData("System info", "Using the Range clip for power.");
+            telemetry.update();
+        }
+
+        // go left
+        if (gamepad1.right_stick_x == -1) {
+            RightFront.setPower(-1000.00);
+            RightBack.setPower(1000.00);
+
+            LeftFront.setPower(1000.00);
+            LeftBack.setPower(1000.00);
+            telemetry.addData("Motor Drive", "Left" + gamepad1.right_stick_x);
+            telemetry.update();
+        }
 
         while (gamepad1.y) {
             if (press == 0) {
