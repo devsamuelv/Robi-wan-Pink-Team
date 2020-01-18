@@ -32,7 +32,7 @@ public class Teleop extends OpMode {
         LeftFront.setPower(gamepad1.left_stick_y);
         LeftBack.setPower(gamepad1.left_stick_y);
 
-        // go right
+        // strafe right
         if (gamepad1.right_stick_x == 1) {
             double strafe = gamepad1.right_stick_x;
 
@@ -48,7 +48,7 @@ public class Teleop extends OpMode {
             telemetry.update();
         }
 
-        // go left
+        // strafe left
         if (gamepad1.right_stick_x == -1) {
             RightFront.setPower(-1000.00);
             RightBack.setPower(1000.00);
