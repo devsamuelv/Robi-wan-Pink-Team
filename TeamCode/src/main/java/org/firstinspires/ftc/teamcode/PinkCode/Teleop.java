@@ -72,7 +72,7 @@ public class Teleop extends OpMode {
         }
 
         // strafe right
-        if (gamepad1.right_bumper) {
+        while (gamepad1.right_bumper) {
             double strafe = 1.0;
 
             double power = Range.clip(strafe, -1.0, 1.0);
@@ -85,11 +85,10 @@ public class Teleop extends OpMode {
             telemetry.addData("Motor Drive", "Right" + power);
             telemetry.addData("System info", "Using the Range clip for power.");
             telemetry.update();
-            return;
         }
 
         // strafe left
-        if (gamepad1.left_bumper) {
+        while (gamepad1.left_bumper) {
             double strafe = 1.0;
 
             double power = Range.clip(strafe, -1.0, 1.0);
@@ -101,7 +100,6 @@ public class Teleop extends OpMode {
             LeftBack.setPower(-power);
             telemetry.addData("Motor Drive", "Left" + gamepad1.right_stick_x);
             telemetry.update();
-            return;
         }
 
         if (gamepad1.x) {
