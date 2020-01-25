@@ -236,13 +236,13 @@ public class Auto extends LinearOpMode {
             // check all the trackable targets to see which one (if any) is visible.
             targetVisible = false;
             for (VuforiaTrackable trackable : allTrackables) {
-                if (((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible()) {
+                if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible()) {
                     telemetry.addData("Visible Target", trackable.getName());
                     targetVisible = true;
 
                     // getUpdatedRobotLocation() will return null if no new information is available since
                     // the last time that call was made, or if the trackable is not currently visible.
-                    OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
+                    OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener) trackable.getListener()).getUpdatedRobotLocation();
                     if (robotLocationTransform != null) {
                         lastLocation = robotLocationTransform;
                     }
@@ -260,14 +260,26 @@ public class Auto extends LinearOpMode {
                 // express the rotation of the robot in degrees.
                 Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
                 telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-            }
-            else {
+                move(translation, rotation);
+            } else {
                 telemetry.addData("Visible Target", "none");
             }
             telemetry.update();
         }
 
-        // Disable Tracking when we are done;
+        // Disable Tracking when we are done
         targetsSkyStone.deactivate();
+    }
+
+    public void move(VectorF position, Orientation rotation) {
+         // 0 is X 1 is Y 2 is Z
+         double X_position = position.get(0);
+         double Y_position = position.get(1);
+         double Z_position = position.get(2);
+         Orientation final_orientation = rotation;
+         final_orientation.getRotationMatrix();
+
+         telemetry.addData("position: ", X_position + " " + Y_position + " " + Z_position);
+         telemetry.update();
     }
 }
