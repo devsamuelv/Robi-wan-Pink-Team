@@ -5,6 +5,7 @@ import android.drm.DrmStore;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.util.Range;
 import com.vuforia.Vuforia;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -18,9 +19,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.teamcode.PinkCode.Systems.Controls;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
@@ -63,8 +66,19 @@ public class Auto extends LinearOpMode {
     private float phoneYRotate = 0;
     private float phoneZRotate = 0;
 
+    public enum Functions {
+        stage1,
+        stage2,
+        park
+    }
+
+    public Functions functions;
+
+    private Controls Controls = new Controls();
+
     @Override
     public void runOpMode() throws InterruptedException {
+
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
          * We can pass Vuforia the handle to a camera preview resource (on the RC phone);
@@ -95,27 +109,14 @@ public class Auto extends LinearOpMode {
         redFrontBridge.setName("Red Front Bridge");
         VuforiaTrackable blueFrontBridge = targetsSkyStone.get(4);
         blueFrontBridge.setName("Blue Front Bridge");
-        VuforiaTrackable red1 = targetsSkyStone.get(5);
-        red1.setName("Red Perimeter 1");
-        VuforiaTrackable red2 = targetsSkyStone.get(6);
-        red2.setName("Red Perimeter 2");
-        VuforiaTrackable front1 = targetsSkyStone.get(7);
-        front1.setName("Front Perimeter 1");
-        VuforiaTrackable front2 = targetsSkyStone.get(8);
-        front2.setName("Front Perimeter 2");
-        VuforiaTrackable blue1 = targetsSkyStone.get(9);
-        blue1.setName("Blue Perimeter 1");
-        VuforiaTrackable blue2 = targetsSkyStone.get(10);
-        blue2.setName("Blue Perimeter 2");
-        VuforiaTrackable rear1 = targetsSkyStone.get(11);
-        rear1.setName("Rear Perimeter 1");
-        VuforiaTrackable rear2 = targetsSkyStone.get(12);
-        rear2.setName("Rear Perimeter 2");
 
         // For convenience, gather together all the trackable objects in one easily-iterable collection */
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
 
         allTrackables.addAll(targetsSkyStone);
+
+        // get the location of the Red Bridge.
+        VectorF locationVectorRed = redFrontBridge.getLocation().getTranslation();
 
         /**
          * In order for localization to work, we need to tell the system where each target is on the field, and
@@ -159,38 +160,38 @@ public class Auto extends LinearOpMode {
                 .translation(bridgeX, -bridgeY, bridgeZ)
                 .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 0, bridgeRotY, 0)));
 
-        //Set the position of the perimeter targets with relation to origin (center of field)
-        red1.setLocation(OpenGLMatrix
-                .translation(quadField, -halfField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 180)));
-
-        red2.setLocation(OpenGLMatrix
-                .translation(-quadField, -halfField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 180)));
-
-        front1.setLocation(OpenGLMatrix
-                .translation(-halfField, -quadField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0 , 90)));
-
-        front2.setLocation(OpenGLMatrix
-                .translation(-halfField, quadField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 90)));
-
-        blue1.setLocation(OpenGLMatrix
-                .translation(-quadField, halfField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 0)));
-
-        blue2.setLocation(OpenGLMatrix
-                .translation(quadField, halfField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 0)));
-
-        rear1.setLocation(OpenGLMatrix
-                .translation(halfField, quadField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0 , -90)));
-
-        rear2.setLocation(OpenGLMatrix
-                .translation(halfField, -quadField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, -90)));
+//        //Set the position of the perimeter targets with relation to origin (center of field)
+//        red1.setLocation(OpenGLMatrix
+//                .translation(quadField, -halfField, mmTargetHeight)
+//                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 180)));
+//
+//        red2.setLocation(OpenGLMatrix
+//                .translation(-quadField, -halfField, mmTargetHeight)
+//                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 180)));
+//
+//        front1.setLocation(OpenGLMatrix
+//                .translation(-halfField, -quadField, mmTargetHeight)
+//                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0 , 90)));
+//
+//        front2.setLocation(OpenGLMatrix
+//                .translation(-halfField, quadField, mmTargetHeight)
+//                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 90)));
+//
+//        blue1.setLocation(OpenGLMatrix
+//                .translation(-quadField, halfField, mmTargetHeight)
+//                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 0)));
+//
+//        blue2.setLocation(OpenGLMatrix
+//                .translation(quadField, halfField, mmTargetHeight)
+//                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 0)));
+//
+//        rear1.setLocation(OpenGLMatrix
+//                .translation(halfField, quadField, mmTargetHeight)
+//                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0 , -90)));
+//
+//        rear2.setLocation(OpenGLMatrix
+//                .translation(halfField, -quadField, mmTargetHeight)
+//                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, -90)));
 
         if (CAMERA_CHOICE == BACK) {
             phoneYRotate = -90;
@@ -201,6 +202,40 @@ public class Auto extends LinearOpMode {
         // Rotate the phone vertical about the X axis if it's in portrait mode
         if (PHONE_IS_PORTRAIT) {
             phoneXRotate = 90 ;
+        }
+
+        switch (functions) {
+            case stage1:
+                //VectorF locationVectorRed = redFrontBridge.getLocation().getTranslation();
+                if (getPosition().get(0) != locationVectorRed.get(0)) {
+                    Controls.drive(true, false, 1.0, 1.0);
+                    telemetry.addData("Red Bridge Location: ", locationVectorRed.toString());
+                    telemetry.addData("Current Bot Location: ", getPosition().get(0));
+                    telemetry.update();
+                } else if (getPosition().get(0) == locationVectorRed.get(0)) {
+                    functions = Functions.stage2;
+                }
+                break;
+
+            case stage2:
+                //VectorF locationVectorRed = redFrontBridge.getLocation().getTranslation();
+                if (50 != locationVectorRed.get(2)) {
+                    Controls.drive(false, false, 1.0, 1.0);
+                    telemetry.addData("Red Bridge Location: ", locationVectorRed.toString());
+                    telemetry.addData("Current Bot Location: ", getPosition().get(1));
+                    telemetry.update();
+                } else if (getPosition().get(2) == locationVectorRed.get(2)) {
+                    functions = Functions.park;
+                }
+                break;
+
+            case park:
+                for (int i = 1000; i > 0; i++) {
+                    Controls.drive(false,false,1.0,1.0);
+                    telemetry.addData("Time: ", i);
+                    telemetry.update();
+                }
+                break;
         }
 
         // Next, translate the camera lens to where it is on the robot.
@@ -217,18 +252,6 @@ public class Auto extends LinearOpMode {
         for (VuforiaTrackable trackable : allTrackables) {
             ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, parameters.cameraDirection);
         }
-
-        // WARNING:
-        // In this sample, we do not wait for PLAY to be pressed.  Target Tracking is started immediately when INIT is pressed.
-        // This sequence is used to enable the new remote DS Camera Preview feature to be used with this sample.
-        // CONSEQUENTLY do not put any driving commands in this loop.
-        // To restore the normal opmode structure, just un-comment the following line:
-
-        // waitForStart();
-
-        // Note: To use the remote camera preview:
-        // AFTER you hit Init on the Driver Station, use the "options menu" to select "Camera Stream"
-        // Tap the preview window to receive a fresh image.
 
         targetsSkyStone.activate();
         while (!isStopRequested()) {
@@ -252,15 +275,13 @@ public class Auto extends LinearOpMode {
 
             // Provide feedback as to where the robot is located (if we know).
             if (targetVisible) {
-                // express position (translation) of robot in inches.
-                VectorF translation = lastLocation.getTranslation();
-                telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
-                        translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
-
-                // express the rotation of the robot in degrees.
-                Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
-                telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-                move(translation, rotation);
+                // if robot position is not equal to image location move to image
+                if (getPosition().get(0) != locationVectorRed.get(0)) {
+                    functions = Functions.stage1;
+                } else if (getPosition().get(0) == locationVectorRed.get(0)) {
+                    telemetry.addData("Position Data", "At Position X");
+                    telemetry.update();
+                }
             } else {
                 telemetry.addData("Visible Target", "none");
             }
@@ -271,7 +292,8 @@ public class Auto extends LinearOpMode {
         targetsSkyStone.deactivate();
     }
 
-    public void move(VectorF position, Orientation rotation) {
+    @Deprecated
+    private void move(VectorF position, Orientation rotation) {
          // 0 is X 1 is Y 2 is Z
          double X_position = position.get(0);
          double Y_position = position.get(1);
@@ -281,5 +303,23 @@ public class Auto extends LinearOpMode {
 
          telemetry.addData("position: ", X_position + " " + Y_position + " " + Z_position);
          telemetry.update();
+
+         rotate(X_position, Y_position, Z_position);
+    }
+
+    private void rotate(double X, double Y, double Z) {
+        if (Z != getRotation().thirdAngle) {
+            Controls.drive(false, false, 0.5, -0.5);
+            telemetry.addData("Orientation", getRotation().thirdAngle);
+            telemetry.update();
+        }
+    }
+
+    private Orientation getRotation() {
+        Orientation currentRotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
+        return currentRotation;
+    }
+    private VectorF getPosition() {
+        return OpenGLMatrix.translation(0,0,0).getTranslation();
     }
 }
