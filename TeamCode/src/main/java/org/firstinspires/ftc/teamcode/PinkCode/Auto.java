@@ -206,7 +206,6 @@ public class Auto extends LinearOpMode {
 
         switch (functions) {
             case stage1:
-                //VectorF locationVectorRed = redFrontBridge.getLocation().getTranslation();
                 if (getPosition().get(0) != locationVectorRed.get(0)) {
                     Controls.drive(true, false, 1.0, 1.0);
                     telemetry.addData("Red Bridge Location: ", locationVectorRed.toString());
@@ -218,7 +217,6 @@ public class Auto extends LinearOpMode {
                 break;
 
             case stage2:
-                //VectorF locationVectorRed = redFrontBridge.getLocation().getTranslation();
                 if (50 != locationVectorRed.get(2)) {
                     Controls.drive(false, false, 1.0, 1.0);
                     telemetry.addData("Red Bridge Location: ", locationVectorRed.toString());
@@ -230,7 +228,7 @@ public class Auto extends LinearOpMode {
                 break;
 
             case park:
-                for (int i = 1000; i > 0; i++) {
+                for (int i = 0; i != 1000; i++) {
                     Controls.drive(false,false,1.0,1.0);
                     telemetry.addData("Time: ", i);
                     telemetry.update();
@@ -291,6 +289,7 @@ public class Auto extends LinearOpMode {
         // Disable Tracking when we are done
         targetsSkyStone.deactivate();
     }
+    @Deprecated
     private void rotate(double X, double Y, double Z) {
         if (Z != getRotation().thirdAngle) {
             Controls.drive(false, false, 0.5, -0.5);
@@ -298,11 +297,10 @@ public class Auto extends LinearOpMode {
             telemetry.update();
         }
     }
-
-    private Orientation getRotation() {
-        return Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
-    }
     private VectorF getPosition() {
         return lastLocation.getTranslation();
+    }
+    private Orientation getRotation() {
+        return Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
     }
 }
