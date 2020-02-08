@@ -291,22 +291,6 @@ public class Auto extends LinearOpMode {
         // Disable Tracking when we are done
         targetsSkyStone.deactivate();
     }
-
-    @Deprecated
-    private void move(VectorF position, Orientation rotation) {
-         // 0 is X 1 is Y 2 is Z
-         double X_position = position.get(0);
-         double Y_position = position.get(1);
-         double Z_position = position.get(2);
-         Orientation final_orientation = rotation;
-         final_orientation.getRotationMatrix();
-
-         telemetry.addData("position: ", X_position + " " + Y_position + " " + Z_position);
-         telemetry.update();
-
-         rotate(X_position, Y_position, Z_position);
-    }
-
     private void rotate(double X, double Y, double Z) {
         if (Z != getRotation().thirdAngle) {
             Controls.drive(false, false, 0.5, -0.5);
@@ -316,10 +300,9 @@ public class Auto extends LinearOpMode {
     }
 
     private Orientation getRotation() {
-        Orientation currentRotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
-        return currentRotation;
+        return Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
     }
     private VectorF getPosition() {
-        return OpenGLMatrix.translation(0,0,0).getTranslation();
+        return lastLocation.getTranslation();
     }
 }

@@ -49,13 +49,5 @@ public class Teleop extends OpMode {
             Controls.relaseBlock();
         }
     }
-
     // 176000 for second
-    private double getServoGround() {
-        return ground_servo.getPosition();
-    }
-
-    private double getLevel_1_servo() {
-        return level_1_servo.getPosition();
-    }
 }

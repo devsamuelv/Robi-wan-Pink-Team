@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.PinkCode.Systems;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorImpl;
 import com.qualcomm.robotcore.util.Range;
@@ -17,11 +18,16 @@ public class Controls extends Teleop {
         ground_servo.setPosition(position);
     }
     public void drive(boolean strafeL, boolean strafeR, double right, double left){
-        RightFront.setPower(right);
-        RightBack.setPower(right);
-        LeftBack.setPower(left);
-        LeftFront.setPower(left);
 
+        // if not strafing drive
+        if (!strafeL && !strafeR) {
+            RightFront.setPower(right);
+            RightBack.setPower(right);
+            LeftBack.setPower(left);
+            LeftFront.setPower(left);
+        }
+
+        // strafe Left
         if (strafeL) {
             double power = 1.0;
             Range.clip(power, -1.0, 1.0);
@@ -33,6 +39,7 @@ public class Controls extends Teleop {
             telemetry.update();
         }
 
+        // strafe right
         if (strafeR) {
             double power = 1.0;
             Range.clip(power, -1.0, 1.0);
@@ -43,6 +50,31 @@ public class Controls extends Teleop {
             telemetry.addData("Strafe Power", "Power: " + power);
             telemetry.update();
         }
+    }
+    // TODO add auto drive
+    @Deprecated
+    public void autoDrive(boolean strafeL, boolean strafeR, double left, double right) {
+        RightFront.setPower(right);
+        RightBack.setPower(right);
+        LeftFront.setPower(left);
+        LeftBack.setPower(left);
+
+        if (strafeL) {
+            RightFront.setPower(-right);
+            RightBack.setPower(right);
+            LeftFront.setPower(left);
+            LeftBack.setPower(-left);
+        }
+
+        if (strafeR) {
+            RightFront.setPower(right);
+            RightBack.setPower(-right);
+            LeftFront.setPower(-left);
+            LeftBack.setPower(left);
+        }
+    }
+    public double getGroundSevo() {
+        return ground_servo.getPosition();
     }
     public void pickBlock() {
         grabber_left.setPosition(0.5);
@@ -71,16 +103,4 @@ public class Controls extends Teleop {
         telemetry.addData("Servo Grabber Right: ", grabber_right.getPosition());
         telemetry.update();
     }
-    //        double strafe = 1.0;
-//
-//            double power = Range.clip(strafe, -1.0, 1.0);
-//
-//            RightFront.setPower(power);
-//            RightBack.setPower(-power);
-//
-//            LeftFront.setPower(-power);
-//            LeftBack.setPower(power);
-//            telemetry.addData("Motor Drive", "Right" + power);
-//            telemetry.addData("System info", "Using the Range clip for power.");
-//            telemetry.update();
 }

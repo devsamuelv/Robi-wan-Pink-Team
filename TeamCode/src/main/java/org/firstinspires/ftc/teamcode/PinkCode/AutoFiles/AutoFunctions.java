@@ -2,42 +2,23 @@ package org.firstinspires.ftc.teamcode.PinkCode.AutoFiles;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.PinkCode.Auto;
+import org.firstinspires.ftc.teamcode.PinkCode.Systems.Controls;
 
 import static org.firstinspires.ftc.teamcode.PinkCode.Hardware.Hardware.*;
 
 @Autonomous(group = "Auto", name = "Auto")
 @Disabled
-public class AutoFunctions extends OpMode {
-
+public class AutoFunctions extends LinearOpMode {
+    Controls Controls = new Controls();
     @Override
-    public void init() {
-        StartHardware(hardwareMap);
+    public void runOpMode() throws InterruptedException {
+        waitForStart();
+        wait(5000);
+
     }
 
-    @Override
-    public void loop() {
-        LeftBack.setPower(-80);
-        LeftFront.setPower(-80);
-        RightBack.setPower(-80);
-        RightFront.setPower(-80);
-        try {
-            wait(5000);
-        } catch (InterruptedException e) {
-            telemetry.addData("Error: ",e.getMessage());
-            telemetry.update();
-        }
-        LeftBack.setPower(-80);
-        LeftFront.setPower(-80);
-        RightBack.setPower(80);
-        RightFront.setPower(80);
-        try {
-            wait(5000);
-        } catch (InterruptedException e) {
-            telemetry.addData("Error: ",e.getMessage());
-            telemetry.update();
-        }
-    }
 }
