@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.PinkCode.Systems;
 
+import com.qualcomm.hardware.microsoft.MicrosoftGamepadXbox360;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.Range;
 
@@ -9,9 +10,26 @@ import org.firstinspires.ftc.teamcode.PinkCode.Teleop;
 import static org.firstinspires.ftc.teamcode.PinkCode.Hardware.Hardware.*;
 
 public abstract class Controls extends OpMode {
+    public MicrosoftGamepadXbox360 xgamepad = new MicrosoftGamepadXbox360();
+
+    @Deprecated
     public void setGroundServoPostion(double position) {
         Range.clip(position, 0.5, 0.7);
         ground_servo.setPosition(position);
+    }
+    public void headMove() {
+        int x = 0;
+
+        if (x == 0) {
+            ground_servo.setPosition(0.5);
+            x = 1;
+        } else if (x == 1) {
+            ground_servo.setPosition(0.7);
+            x = 0;
+        } else {
+            telemetry.addData("headMove Number: ", x);
+            telemetry.update();
+        }
     }
     public void drive(boolean strafeL, boolean strafeR, double right, double left){
         try {
@@ -73,7 +91,7 @@ public abstract class Controls extends OpMode {
     private double getGrabberRight() {
         return grabber_right.getPosition();
     }
-    public void init() {
+    public void Botinit() {
         grabber_right.setPosition(0.5);
         telemetry.addData("Servo Ground: ", ground_servo.getPosition());
         telemetry.addData("Servo Grabber Left: ", grabber_left.getPosition());
