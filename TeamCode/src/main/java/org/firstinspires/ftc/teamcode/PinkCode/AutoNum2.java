@@ -12,7 +12,6 @@ public class AutoNum2 extends Controls {
     @Override
     public void init() {
         StartHardware(hardwareMap);
-        init();
     }
 
     @Override

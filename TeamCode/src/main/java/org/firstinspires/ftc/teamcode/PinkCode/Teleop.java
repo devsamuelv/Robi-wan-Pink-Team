@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.PinkCode;
 
-import com.qualcomm.hardware.microsoft.MicrosoftGamepadXbox360;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.PinkCode.Systems.Controls;
 import static org.firstinspires.ftc.teamcode.PinkCode.Hardware.Hardware.*;
@@ -9,13 +8,17 @@ import static org.firstinspires.ftc.teamcode.PinkCode.Hardware.Hardware.*;
 public class Teleop extends Controls {
     @Override
     public void init() {
-        Botinit();
-        StartHardware(hardwareMap);
+        try {
+            StartHardware(hardwareMap);
+        } catch (Exception e) {
+            telemetry.addData("Error", e.getMessage());
+            telemetry.update();
+        }
     }
 
     @Override
     public void loop() {
-        drive(false, false, gamepad1.right_stick_y, gamepad1.left_stick_y);
+        drive(false, false, gamepad1.right_stick_y, gamepad1.left_stick_x);
 
         // strafe right
         if (gamepad1.dpad_right) {
@@ -28,7 +31,11 @@ public class Teleop extends Controls {
         }
 
         if (gamepad1.y) {
-            headMove();
+            liftUp();
+        }
+
+        if (gamepad1.x) {
+            liftDown();
         }
 
         if (gamepad1.a) {

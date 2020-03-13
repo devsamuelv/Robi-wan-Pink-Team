@@ -17,28 +17,73 @@ public abstract class Controls extends OpMode {
         Range.clip(position, 0.5, 0.7);
         ground_servo.setPosition(position);
     }
-    public void headMove() {
-        int x = 0;
 
-        if (x == 0) {
-            ground_servo.setPosition(0.5);
-            x = 1;
-        } else if (x == 1) {
-            ground_servo.setPosition(0.7);
-            x = 0;
-        } else {
-            telemetry.addData("headMove Number: ", x);
-            telemetry.update();
-        }
+    public void liftUp() {
+        ground_servo.setPosition(0.7);
     }
-    public void drive(boolean strafeL, boolean strafeR, double right, double left){
+    public void liftDown() {
+        ground_servo.setPosition(0.5);
+    }
+    public void drive(boolean strafeL, boolean strafeR, double right, double left) {
         try {
             // if not strafing drive
             if (!strafeL && !strafeR) {
-                RightFront.setPower(right);
-                RightBack.setPower(right);
-                LeftBack.setPower(left);
-                LeftFront.setPower(left);
+                if (right > 0.5) {
+                    double power = 0;
+                    if (gamepad1.right_bumper) {
+                        power = 0.5;
+                    }
+
+                    if (xgamepad.right_bumper) {
+                        power = 0.5;
+                    }
+
+                    RightFront.setPower(-power);
+                    RightBack.setPower(-power);
+                    LeftBack.setPower(-power);
+                    LeftFront.setPower(-power);
+                    telemetry.addData("Direction: ", "Back");
+                    telemetry.update();
+                }
+
+                if (right > -0.5) {
+                    double power = 1.0;
+
+                    if (gamepad1.right_bumper) {
+                        power = 0.5;
+                    }
+
+                    if (xgamepad.right_bumper) {
+                        power = 0.5;
+                    }
+
+                    RightFront.setPower(power);
+                    RightBack.setPower(power);
+                    LeftBack.setPower(power);
+                    LeftFront.setPower(power);
+                    telemetry.addData("Direction: ", "Front");
+                    telemetry.update();
+                }
+
+                if (left > 0.5) {
+                    LeftFront.setPower(-left);
+                    LeftBack.setPower(-left);
+                    RightBack.setPower(left);
+                    RightFront.setPower(left);
+                    telemetry.addData("Direction: ", "Right");
+                    telemetry.update();
+
+                }
+
+                if (left > 0.5) {
+                    LeftFront.setPower(left);
+                    LeftBack.setPower(left);
+                    RightFront.setPower(-left);
+                    RightBack.setPower(-left);
+                    telemetry.addData("Direction: ", "Left");
+                    telemetry.update();
+
+                }
             }
 
             // strafe Left
@@ -63,39 +108,25 @@ public abstract class Controls extends OpMode {
                 telemetry.update();
             }
         } catch (NullPointerException e) {
-            telemetry.addData("Error: ",e.getMessage());
+            telemetry.addData("Error: ", e.getMessage());
             telemetry.addData("Cause: ", e.getCause());
             telemetry.update();
         }
     }
-    public double getGroundSevo() {
+    private double getGroundSevo() {
         return ground_servo.getPosition();
     }
     public void pickBlock() {
-        grabber_left.setPosition(0.5);
-        grabber_right.setPosition(0.5);
-        telemetry.addData("Servo Left", getGrabberLeft());
-        telemetry.addData("Servo Right", getGrabberRight());
+        grabber.setPosition(0.7);
+        telemetry.addData("Grabber", getGrabber());
         telemetry.update();
     }
     public void relaseBlock() {
-        grabber_left.setPosition(0);
-        grabber_right.setPosition(0);
-        telemetry.addData("Servo Left", getGrabberLeft());
-        telemetry.addData("Servo Right", getGrabberRight());
+        grabber.setPosition(0.5);
+        telemetry.addData("Grabber", getGrabber());
         telemetry.update();
     }
-    private double getGrabberLeft() {
-        return grabber_left.getPosition();
-    }
-    private double getGrabberRight() {
-        return grabber_right.getPosition();
-    }
-    public void Botinit() {
-        grabber_right.setPosition(0.5);
-        telemetry.addData("Servo Ground: ", ground_servo.getPosition());
-        telemetry.addData("Servo Grabber Left: ", grabber_left.getPosition());
-        telemetry.addData("Servo Grabber Right: ", grabber_right.getPosition());
-        telemetry.update();
+    private double getGrabber() {
+        return grabber.getPosition();
     }
 }
